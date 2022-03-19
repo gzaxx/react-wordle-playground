@@ -1,16 +1,15 @@
 import React from "react";
+import styled, { css } from "styled-components";
 
 export interface LetterProps {
   value?: string;
   backgroundColor?: "white" | "yellow" | "grey" | "green";
-  readonly: boolean;
   tabIndex: number;
 }
 
-export const Letter = ({
+const Letter = ({
   value = "",
   backgroundColor = "white",
-  readonly = true,
   tabIndex,
   ...props
 }: LetterProps) => {
@@ -22,9 +21,24 @@ export const Letter = ({
         className={backgroundColor}
         name="letter"
         value={value}
-        readOnly={readonly}
         {...props}
       />
     </>
   );
 };
+
+export const StyledLetter = styled(Letter)`
+  width: 40px;
+  height: 65px;
+  font-size: 32px;
+  line-height: 65px;
+  text-align: center;
+  ${(props) => {
+    switch (props.backgroundColor) {
+      case "green":
+        return css`
+          background-color: #fff;
+        `;
+    }
+  }}
+`;

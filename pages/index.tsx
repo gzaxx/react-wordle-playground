@@ -13,7 +13,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <WordRow row={1} letterCount={6}></WordRow>
+        <WordRow row={1} letterCount={5}></WordRow>
       </main>
 
       <footer className={styles.footer}>Test Wordle</footer>
