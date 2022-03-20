@@ -4,7 +4,7 @@ import { Letter } from "./Letter";
 
 export interface WordRowProps {
   row: number;
-  letterCount: number;
+  values: [];
 }
 
 const Wrapper = styled.div`
@@ -15,12 +15,12 @@ const Wrapper = styled.div`
   min-width: 350px;
 `;
 
-export const WordRow = ({ row, letterCount, ...props }: WordRowProps) => {
+export const WordRow = ({ row, values, ...props }: WordRowProps) => {
   return (
     <Wrapper {...props}>
-      {[...Array(letterCount)].map((_, index) => {
+      {[...Array(5)].map((_, index) => {
         const key = `${row}${index}`;
-        return <Letter key={key} {...props}></Letter>;
+        return <Letter key={key} value={values[index]} {...props}></Letter>;
       })}
     </Wrapper>
   );

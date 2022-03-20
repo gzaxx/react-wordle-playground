@@ -1,7 +1,38 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
 import styled from "styled-components";
 import { WordRow } from "../components/WordRow";
+import useGlobalKeyUpEvent from "../effects/key-events";
+
+const Chars = [
+  "q",
+  "w",
+  "e",
+  "r",
+  "t",
+  "y",
+  "u",
+  "i",
+  "o",
+  "p",
+  "a",
+  "s",
+  "d",
+  "f",
+  "g",
+  "h",
+  "j",
+  "k",
+  "l",
+  "z",
+  "x",
+  "c",
+  "v",
+  "b",
+  "n",
+  "m",
+];
 
 const Container = styled.div`
   padding: 0 2rem;
@@ -38,7 +69,51 @@ const Header = styled.section`
   align-items: center;
 `;
 
+interface IRowState {
+  0: Array<string>;
+  1: Array<string>;
+  2: Array<string>;
+  3: Array<string>;
+  4: Array<string>;
+  5: Array<string>;
+}
+
+interface IGameState {
+  isActive: boolean;
+  currentRow: number;
+  letterCount: number;
+  values: IRowState;
+}
+
+const defaultState: IGameState = {
+  isActive: true,
+  currentRow: 1,
+  letterCount: 5,
+  values: {
+    0: new Array<string>(),
+    1: new Array<string>(),
+    2: new Array<string>(),
+    3: new Array<string>(),
+    4: new Array<string>(),
+    5: new Array<string>(),
+  },
+};
+
 const Home: NextPage = () => {
+  const [gameState, setGameState] = useState(defaultState);
+
+  const keyEvent = (ev: KeyboardEvent) => {
+    if (Chars.indexOf(ev.key) >= 0) {
+      const values = gameState.values;
+      const current = values[0];
+
+      current.push(ev.key);
+
+      setGameState({ ...gameState, values });
+    }
+  };
+  useGlobalKeyUpEvent(keyEvent);
+
   return (
     <Container>
       <Head>
@@ -50,8 +125,8 @@ const Home: NextPage = () => {
       <Header>Wordle</Header>
 
       <GameArea>
-        {[...Array(6)].map((_, index) => (
-          <WordRow key={index} row={index} letterCount={5}></WordRow>
+        {Object.entries(gameState.values).map(([, value], index) => (
+          <WordRow key={index} row={index} values={value}></WordRow>
         ))}
       </GameArea>
 
