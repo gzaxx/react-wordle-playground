@@ -16,15 +16,12 @@ const Wrapper = styled.div`
 `;
 
 export const WordRow = ({ row, letterCount, ...props }: WordRowProps) => {
-  let letters = [];
-  for (let i = 0; i < letterCount; i++) {
-    const key = row * i;
-    let value = "";
-    if (i == 0) {
-      value = "A";
-    }
-    letters.push(<Letter key={key} value={value} {...props}></Letter>);
-  }
-
-  return <Wrapper {...props}>{letters}</Wrapper>;
+  return (
+    <Wrapper {...props}>
+      {[...Array(letterCount)].map((_, index) => {
+        const key = `${row}${index}`;
+        return <Letter key={key} {...props}></Letter>;
+      })}
+    </Wrapper>
+  );
 };
