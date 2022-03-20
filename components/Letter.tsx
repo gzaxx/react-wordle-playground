@@ -4,41 +4,38 @@ import styled, { css } from "styled-components";
 export interface LetterProps {
   value?: string;
   backgroundColor?: "white" | "yellow" | "grey" | "green";
-  tabIndex: number;
 }
 
-const Letter = ({
-  value = "",
-  backgroundColor = "white",
-  tabIndex,
-  ...props
-}: LetterProps) => {
-  return (
-    <>
-      <input
-        type="text"
-        tabIndex={tabIndex}
-        className={backgroundColor}
-        name="letter"
-        value={value}
-        {...props}
-      />
-    </>
-  );
-};
-
-export const StyledLetter = styled(Letter)`
-  width: 40px;
-  height: 65px;
+const LetterWrapper = styled.div`
+  display: inline-flex;
+  width: 62px;
+  height: 62px;
   font-size: 32px;
-  line-height: 65px;
+  line-height: 32px;
   text-align: center;
-  ${(props) => {
+  border: 1px solid #c2c2c2;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  ${(props: LetterProps) => {
     switch (props.backgroundColor) {
       case "green":
         return css`
-          background-color: #fff;
+          background-color: greenyellow;
         `;
     }
   }}
 `;
+
+export const Letter = ({
+  value = "",
+  backgroundColor = "green",
+  ...props
+}: LetterProps) => {
+  return (
+    <LetterWrapper backgroundColor={backgroundColor} {...props}>
+      {value}
+    </LetterWrapper>
+  );
+};

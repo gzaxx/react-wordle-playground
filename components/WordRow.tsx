@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { StyledLetter } from "./Letter";
+import { Letter } from "./Letter";
 
 export interface WordRowProps {
   row: number;
@@ -23,14 +23,7 @@ export const WordRow = ({ row, letterCount, ...props }: WordRowProps) => {
     if (i == 0) {
       value = "A";
     }
-    letters.push(
-      <StyledLetter
-        {...key}
-        value={value}
-        tabIndex={key}
-        {...props}
-      ></StyledLetter>
-    );
+    letters.push(<Letter key={key} value={value} {...props}></Letter>);
   }
 
   return <Wrapper {...props}>{letters}</Wrapper>;
