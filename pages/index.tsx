@@ -4,6 +4,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import { WordRow } from "../components/WordRow";
 import useGlobalKeyUpEvent from "../effects/key-events";
+import { IGameState } from "../interfaces";
+import { getDefaultState, tryAddLetter, tryRemoveLetter } from "../logic";
+import { canSubmit } from "../logic/canSubmit";
 
 const Chars = [
   "q",
@@ -69,47 +72,28 @@ const Header = styled.section`
   align-items: center;
 `;
 
-interface IRowState {
-  0: Array<string>;
-  1: Array<string>;
-  2: Array<string>;
-  3: Array<string>;
-  4: Array<string>;
-  5: Array<string>;
-}
-
-interface IGameState {
-  isActive: boolean;
-  currentRow: number;
-  letterCount: number;
-  values: IRowState;
-}
-
-const defaultState: IGameState = {
-  isActive: true,
-  currentRow: 1,
-  letterCount: 5,
-  values: {
-    0: new Array<string>(),
-    1: new Array<string>(),
-    2: new Array<string>(),
-    3: new Array<string>(),
-    4: new Array<string>(),
-    5: new Array<string>(),
-  },
-};
+const defaultState: IGameState = getDefaultState();
 
 const Home: NextPage = () => {
   const [gameState, setGameState] = useState(defaultState);
 
   const keyEvent = (ev: KeyboardEvent) => {
+    if (!gameState.isActive) {
+      return;
+    }
+
     if (Chars.indexOf(ev.key) >= 0) {
-      const values = gameState.values;
-      const current = values[0];
-
-      current.push(ev.key);
-
-      setGameState({ ...gameState, values });
+      if (tryAddLetter(gameState, ev.key)) {
+        setGameState({ ...gameState });
+      }
+    } else if (ev.key === "Enter") {
+      if (canSubmit(gameState)) {
+        console.log(gameState);
+      }
+    } else if (ev.key === "Backspace") {
+      if (tryRemoveLetter(gameState)) {
+        setGameState({ ...gameState });
+      }
     }
   };
   useGlobalKeyUpEvent(keyEvent);
@@ -125,8 +109,8 @@ const Home: NextPage = () => {
       <Header>Wordle</Header>
 
       <GameArea>
-        {Object.entries(gameState.values).map(([, value], index) => (
-          <WordRow key={index} row={index} values={value}></WordRow>
+        {Object.entries(gameState.rows).map(([, value], index) => (
+          <WordRow key={index} row={index} values={value.values}></WordRow>
         ))}
       </GameArea>
 

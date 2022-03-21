@@ -4,7 +4,7 @@ import { Letter } from "./Letter";
 
 export interface WordRowProps {
   row: number;
-  values: [];
+  values: Array<string>;
 }
 
 const Wrapper = styled.div`
