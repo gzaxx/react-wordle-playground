@@ -1,10 +1,12 @@
 import type { NextPage } from "next";
+import { useTranslation } from "next-i18next";
 import Head from "next/head";
 import { useState } from "react";
 import styled from "styled-components";
 import { WordRow } from "../components/WordRow";
 import useGlobalKeyUpEvent from "../effects/key-events";
 import { IGameState } from "../interfaces";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
   getDefaultState,
   progressGame,
@@ -12,6 +14,7 @@ import {
   tryRemoveLetter,
 } from "../logic";
 import { canSubmit } from "../logic/can-submit";
+import { NextRouter } from "next/router";
 
 const Chars = [
   "q",
@@ -79,7 +82,16 @@ const Header = styled.section`
 
 const defaultState: IGameState = getDefaultState();
 
+export async function getStaticProps({ locale }: NextRouter) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale!, ["common", "footer"])),
+    },
+  };
+}
+
 const Home: NextPage = () => {
+  const [t] = useTranslation();
   const [gameState, setGameState] = useState(defaultState);
 
   const keyEvent = (ev: KeyboardEvent) => {
@@ -112,7 +124,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>Wordle</Header>
+      <Header>{t("title")}</Header>
 
       <GameArea>
         {Object.entries(gameState.rows).map(([, value], index) => (
@@ -120,7 +132,7 @@ const Home: NextPage = () => {
         ))}
       </GameArea>
 
-      <Footer>Test Wordle</Footer>
+      <Footer>{t("footer.text")}</Footer>
     </Container>
   );
 };
