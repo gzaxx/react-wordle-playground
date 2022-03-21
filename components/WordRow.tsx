@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { IRowData } from "../interfaces";
 import { Letter } from "./Letter";
 
 export interface WordRowProps {
   row: number;
-  values: Array<string>;
+  values: Array<IRowData>;
 }
 
 const Wrapper = styled.div`
@@ -18,9 +19,9 @@ const Wrapper = styled.div`
 export const WordRow = ({ row, values, ...props }: WordRowProps) => {
   return (
     <Wrapper {...props}>
-      {[...Array(5)].map((_, index) => {
+      {values.map((rowData, index) => {
         const key = `${row}${index}`;
-        return <Letter key={key} value={values[index]} {...props}></Letter>;
+        return <Letter key={key} {...rowData} {...props}></Letter>;
       })}
     </Wrapper>
   );

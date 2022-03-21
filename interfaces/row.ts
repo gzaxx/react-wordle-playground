@@ -1,3 +1,5 @@
+import { IRowData } from "./row-data";
+
 export interface IRow {
-  values: Array<string>;
+  values: Array<IRowData>;
 }

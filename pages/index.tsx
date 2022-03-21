@@ -5,8 +5,14 @@ import styled from "styled-components";
 import { WordRow } from "../components/WordRow";
 import useGlobalKeyUpEvent from "../effects/key-events";
 import { IGameState } from "../interfaces";
-import { getDefaultState, tryAddLetter, tryRemoveLetter } from "../logic";
-import { canSubmit } from "../logic/canSubmit";
+import {
+  getDefaultState,
+  progressGame,
+  tryAddLetter,
+  tryRemoveLetter,
+  validate,
+} from "../logic";
+import { canSubmit } from "../logic/can-submit";
 
 const Chars = [
   "q",
@@ -88,7 +94,9 @@ const Home: NextPage = () => {
       }
     } else if (ev.key === "Enter") {
       if (canSubmit(gameState)) {
-        console.log(gameState);
+        validate(gameState);
+        progressGame(gameState);
+        setGameState({ ...gameState });
       }
     } else if (ev.key === "Backspace") {
       if (tryRemoveLetter(gameState)) {

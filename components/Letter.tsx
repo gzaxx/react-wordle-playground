@@ -1,9 +1,10 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { ValueStatus } from "../interfaces";
 
 export interface LetterProps {
   value?: string;
-  backgroundColor?: "white" | "yellow" | "grey" | "green";
+  status?: ValueStatus;
 }
 
 const LetterWrapper = styled.div`
@@ -19,10 +20,24 @@ const LetterWrapper = styled.div`
   justify-content: center;
   vertical-align: middle;
   ${(props: LetterProps) => {
-    switch (props.backgroundColor) {
-      case "green":
+    switch (props.status) {
+      case ValueStatus.currect:
         return css`
-          background-color: greenyellow;
+          background-color: rgb(106, 170, 100);
+        `;
+      case ValueStatus.wrongPlace: {
+        return css`
+          background-color: rgb(201, 180, 88);
+        `;
+      }
+      case ValueStatus.incorrect: {
+        return css`
+          background-color: rgb(120, 124, 126);
+        `;
+      }
+      default:
+        return css`
+          background-color: #fff;
         `;
     }
   }}
@@ -30,11 +45,11 @@ const LetterWrapper = styled.div`
 
 export const Letter = ({
   value = "",
-  backgroundColor = "green",
+  status = ValueStatus.notSet,
   ...props
 }: LetterProps) => {
   return (
-    <LetterWrapper backgroundColor={backgroundColor} {...props}>
+    <LetterWrapper status={status} {...props}>
       {value}
     </LetterWrapper>
   );
