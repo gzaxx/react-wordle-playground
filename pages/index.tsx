@@ -10,7 +10,6 @@ import {
   progressGame,
   tryAddLetter,
   tryRemoveLetter,
-  validate,
 } from "../logic";
 import { canSubmit } from "../logic/can-submit";
 
@@ -94,9 +93,8 @@ const Home: NextPage = () => {
       }
     } else if (ev.key === "Enter") {
       if (canSubmit(gameState)) {
-        validate(gameState);
-        progressGame(gameState);
-        setGameState({ ...gameState });
+        const newState = progressGame(gameState);
+        setGameState(newState);
       }
     } else if (ev.key === "Backspace") {
       if (tryRemoveLetter(gameState)) {
