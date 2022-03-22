@@ -125,7 +125,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>{t("title")}</Header>
+      <Header role="title">{t("title")}</Header>
 
       <GameArea>
         {Object.entries(gameState.rows).map(([, value], index) => (
@@ -135,7 +135,7 @@ const Home: NextPage = () => {
 
       <GameResult result={gameState.gameResult}></GameResult>
 
-      <Footer>{t("footer.text")}</Footer>
+      <Footer role="footer">{t("footer.text")}</Footer>
     </Container>
   );
 };
