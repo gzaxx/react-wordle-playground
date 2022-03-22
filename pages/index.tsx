@@ -15,6 +15,7 @@ import {
 } from "../logic";
 import { canSubmit } from "../logic/can-submit";
 import { NextRouter } from "next/router";
+import { GameResult } from "../components/GameResult";
 
 const Chars = [
   "q",
@@ -85,7 +86,7 @@ const defaultState: IGameState = getDefaultState();
 export async function getStaticProps({ locale }: NextRouter) {
   return {
     props: {
-      ...(await serverSideTranslations(locale!, ["common", "footer"])),
+      ...(await serverSideTranslations(locale ?? "", ["common", "footer"])),
     },
   };
 }
@@ -131,6 +132,8 @@ const Home: NextPage = () => {
           <WordRow key={index} row={index} values={value.values}></WordRow>
         ))}
       </GameArea>
+
+      <GameResult result={gameState.gameResult}></GameResult>
 
       <Footer>{t("footer.text")}</Footer>
     </Container>

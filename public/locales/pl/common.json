@@ -1,5 +1,9 @@
 {
   "title": "Wyrazik",
+  "result": {
+    "won": "Wygrałeś!",
+    "lost": "Przegrałeś!"
+  },
   "footer": {
     "text": "Wyrazik Stópka"
   }

@@ -1,4 +1,10 @@
-import { IGameState, IRow, IRowData, ValueStatus } from "../interfaces";
+import {
+  GameResultType,
+  IGameState,
+  IRow,
+  IRowData,
+  ValueStatus,
+} from "../interfaces";
 
 export const MAX_TRIES = 6;
 export const MAX_LETTERS_PER_ROW = 5;
@@ -21,6 +27,7 @@ export function getDefaultState(): IGameState {
     currentRowIndex: 0,
     maxTries: MAX_TRIES,
     letterCount: MAX_LETTERS_PER_ROW,
+    gameResult: GameResultType.InProgress,
     isActive: true,
     rows: rows,
   };

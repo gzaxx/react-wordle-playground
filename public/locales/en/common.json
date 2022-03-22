@@ -1,5 +1,9 @@
 {
   "title": "Wordle",
+  "result": {
+    "won": "You won!",
+    "lost": "You lost!"
+  },
   "footer": {
     "text": "Wordle Footer"
   }
