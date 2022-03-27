@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { ValueStatus } from "../interfaces";
+import * as colors from "../styles/colors";
 
 export interface LetterProps {
   value?: string;
@@ -23,21 +24,21 @@ const LetterWrapper = styled.div`
     switch (props.status) {
       case ValueStatus.currect:
         return css`
-          background-color: rgb(106, 170, 100);
+          background-color: ${colors.GREEN};
         `;
-      case ValueStatus.wrongPlace: {
+      case ValueStatus.wrongPosition: {
         return css`
-          background-color: rgb(201, 180, 88);
+          background-color: ${colors.YELLOW};
         `;
       }
       case ValueStatus.incorrect: {
         return css`
-          background-color: rgb(120, 124, 126);
+          background-color: ${colors.GRAY};
         `;
       }
       default:
         return css`
-          background-color: #fff;
+          background-color: ${colors.WHITE};
         `;
     }
   }}
@@ -45,11 +46,11 @@ const LetterWrapper = styled.div`
 
 export const Letter = ({
   value = "",
-  status = ValueStatus.notSet,
+  status = ValueStatus.notChecked,
   ...props
 }: LetterProps) => {
   return (
-    <LetterWrapper status={status} {...props}>
+    <LetterWrapper role="letter" status={status} {...props}>
       {value}
     </LetterWrapper>
   );

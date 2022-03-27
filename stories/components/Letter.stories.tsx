@@ -26,5 +26,5 @@ const Template: ComponentStory<typeof Letter> = (args) => <Letter {...args} />;
 
 export const Default = Template.bind({
   value: "A",
-  status: ValueStatus.notSet,
+  status: ValueStatus.notChecked,
 });

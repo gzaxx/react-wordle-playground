@@ -1,8 +1,8 @@
 export enum ValueStatus {
-  notSet,
+  notChecked,
   currect,
   incorrect,
-  wrongPlace,
+  wrongPosition,
 }
 
 export interface IRowData {

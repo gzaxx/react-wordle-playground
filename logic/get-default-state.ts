@@ -16,7 +16,7 @@ export function getDefaultState(): IGameState {
     const row: IRow = { values: new Array<IRowData>() };
 
     for (let j = 0; j < MAX_LETTERS_PER_ROW; j++) {
-      row.values.push({ status: ValueStatus.notSet, value: "" });
+      row.values.push({ status: ValueStatus.notChecked, value: "" });
     }
 
     rows.push(row);

@@ -35,7 +35,7 @@ function validate(gameState: IGameState): void {
     if (val.value === letter) {
       val.status = ValueStatus.currect;
     } else if (gameState.targetWord.indexOf(val.value) >= 0) {
-      val.status = ValueStatus.wrongPlace;
+      val.status = ValueStatus.wrongPosition;
     } else {
       val.status = ValueStatus.incorrect;
     }

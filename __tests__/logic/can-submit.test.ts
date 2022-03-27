@@ -5,8 +5,8 @@ import { canSubmit } from "../../logic/can-submit";
 
 const rowMock: IRow = {
   values: [
-    { value: "", status: ValueStatus.notSet },
-    { value: "", status: ValueStatus.notSet },
+    { value: "", status: ValueStatus.notChecked },
+    { value: "", status: ValueStatus.notChecked },
   ],
 };
 
