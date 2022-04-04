@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useTranslation } from "next-i18next";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { WordRow } from "../components/WordRow";
 import useGlobalKeyUpEvent from "../effects/key-events";
@@ -14,8 +14,9 @@ import {
   tryRemoveLetter,
 } from "../logic";
 import { canSubmit } from "../logic/can-submit";
-import { NextRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import { GameResult } from "../components/GameResult";
+import { wordProvider } from "../services/words.provider";
 
 const Chars = [
   "q",
@@ -86,7 +87,7 @@ const defaultState: IGameState = getDefaultState();
 export async function getStaticProps({ locale }: NextRouter) {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? "", ["common", "footer"])),
+      ...(await serverSideTranslations(locale ?? "", ["common"])),
     },
   };
 }
@@ -94,6 +95,7 @@ export async function getStaticProps({ locale }: NextRouter) {
 const Home: NextPage = () => {
   const [t] = useTranslation();
   const [gameState, setGameState] = useState(defaultState);
+  const { locale } = useRouter();
 
   const keyEvent = (ev: KeyboardEvent) => {
     if (!gameState.isActive) {
@@ -116,6 +118,14 @@ const Home: NextPage = () => {
     }
   };
   useGlobalKeyUpEvent(keyEvent);
+
+  useEffect(() => {
+    async function getWord(): Promise<void> {
+      const word = await wordProvider(locale ?? "en");
+      console.log(word);
+    }
+    getWord();
+  }, [locale]);
 
   return (
     <Container>
